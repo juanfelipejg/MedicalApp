@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MedicalApp.Domain.MedicalApp.Models
 {
-    internal class Doctor
+    public class Doctor
     {
         public string Identification { get; set; }
 
