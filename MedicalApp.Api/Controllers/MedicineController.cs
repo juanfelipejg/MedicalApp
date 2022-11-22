@@ -6,31 +6,31 @@
 
     [Route("api/[controller]")]
     [ApiController]
-    public class PatientsController: ControllerBase
+    public class MedicineController : ControllerBase
     {
-        private readonly IPatientRepository _patientRepository;
+        private readonly IMedicineRepository _medicineRepositoy;
 
-        public PatientsController(IPatientRepository patientRepository)
+        public MedicineController(IMedicineRepository medicineRepository)
         {
-            _patientRepository = patientRepository;
+            _medicineRepositoy = medicineRepository;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _patientRepository.GetAll());
+            return Ok(await _medicineRepositoy.GetAll());
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetPatientById(int id)
+        public async Task<IActionResult> GetMedicineById(int id)
         {
-            return Ok(await _patientRepository.GetById(id));
+            return Ok(await _medicineRepositoy.GetById(id));
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePatient([FromBody] Patient patient)
+        public async Task<IActionResult> CreateMedicine([FromBody] Medicine medicine)
         {
-            if (patient == null)
+            if (medicine == null)
             {
                 return BadRequest();
             }
@@ -40,15 +40,15 @@
                 return BadRequest();
             }
 
-            var created = await _patientRepository.Insert(patient);
+            var created = await _medicineRepositoy.Insert(medicine);
 
             return Created("created", created);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdatePatient([FromBody] Patient patient)
+        public async Task<IActionResult> UpdateMedicine([FromBody] Medicine medicine)
         {
-            if (patient == null)
+            if (medicine == null)
             {
                 return BadRequest();
             }
@@ -58,15 +58,15 @@
                 return BadRequest();
             }
 
-            await _patientRepository.Update(patient);
+            await _medicineRepositoy.Update(medicine);
 
             return NoContent();
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeletePatient(int id)
+        public async Task<IActionResult> DeleteMedicine(int id)
         {
-            await _patientRepository.Delete(id);
+            await _medicineRepositoy.Delete(id);
 
             return NoContent();
         }

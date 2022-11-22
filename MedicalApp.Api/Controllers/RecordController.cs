@@ -6,31 +6,30 @@
 
     [Route("api/[controller]")]
     [ApiController]
-    public class PatientsController: ControllerBase
+    public class RecordController : ControllerBase
     {
-        private readonly IPatientRepository _patientRepository;
-
-        public PatientsController(IPatientRepository patientRepository)
+        private readonly IRecordRepository _recordRepositoy;
+        public RecordController(IRecordRepository recordRepository)
         {
-            _patientRepository = patientRepository;
+            _recordRepositoy = recordRepository;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _patientRepository.GetAll());
+            return Ok(await _recordRepositoy.GetAll());
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetPatientById(int id)
+        public async Task<IActionResult> GetRecordById(int id)
         {
-            return Ok(await _patientRepository.GetById(id));
+            return Ok(await _recordRepositoy.GetById(id));
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePatient([FromBody] Patient patient)
+        public async Task<IActionResult> CreateMedicine([FromBody] Record record)
         {
-            if (patient == null)
+            if (record == null)
             {
                 return BadRequest();
             }
@@ -40,15 +39,15 @@
                 return BadRequest();
             }
 
-            var created = await _patientRepository.Insert(patient);
+            var created = await _recordRepositoy.Insert(record);
 
             return Created("created", created);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdatePatient([FromBody] Patient patient)
+        public async Task<IActionResult> UpdateRecord([FromBody] Record record)
         {
-            if (patient == null)
+            if (record == null)
             {
                 return BadRequest();
             }
@@ -58,15 +57,15 @@
                 return BadRequest();
             }
 
-            await _patientRepository.Update(patient);
+            await _recordRepositoy.Update(record);
 
             return NoContent();
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeletePatient(int id)
+        public async Task<IActionResult> DeleteRecord(int id)
         {
-            await _patientRepository.Delete(id);
+            await _recordRepositoy.Delete(id);
 
             return NoContent();
         }
